@@ -1,14 +1,10 @@
-	allprojects {
-		repositories {
-			mavenCentral();
-			jcenter()
-		}
+allprojects {
+	repositories {
+		mavenCentral();
+		jcenter()
 	}
+}
 dependencies {
-			  implementation 'com.android.support:appcompat-v7:25.0.1'
-			  implementation 'com.otaliastudios:cameraview:2.7.2'
-			  implementation 'android.arch.lifecycle:livedata:1.1.1'
-
-
 	
+	implementation 'com.otaliastudios:cameraview:2.7.2' 
 }
