@@ -5,7 +5,10 @@
 		}
 	}
 dependencies {
-			  compile 'com.android.support:appcompat-v7:25.0.1'
-			  compile 'com.otaliastudios:cameraview:2.3.1'
-			  compile 'android.arch.lifecycle:livedata:1.1.1'
+			  implementation 'com.android.support:appcompat-v7:25.0.1'
+			  implementation 'com.otaliastudios:cameraview:2.7.2'
+			  implementation 'android.arch.lifecycle:livedata:1.1.1'
+
+
+	
 }
