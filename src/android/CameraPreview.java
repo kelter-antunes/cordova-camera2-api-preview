@@ -49,32 +49,37 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
     }
     private Intent intent;
     private Intent notificationIntent;
-    private void openNewActivity(String name,Context context) {
-        fragment = new CameraActivity();
-        fragment.setEventListener(this);
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                
-
-
-        FrameLayout containerView = (FrameLayout)cordova.getActivity().findViewById(containerViewId);
-        containerView = new FrameLayout(cordova.getActivity().getApplicationContext());
-        containerView.setId(containerViewId);
-        FrameLayout.LayoutParams containerLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        cordova.getActivity().addContentView(containerView, containerLayoutParams);
-        ((ViewGroup)webView.getView().getParent().getParent()).setBackgroundColor(0x00000000);	
-        webViewParent = webView.getView().getParent().getParent();
-        ((ViewGroup)webView.getView().getParent().getParent()).bringToFront();
-        FragmentManager fragmentManager = cordova.getActivity().getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(containerView.getId(), fragment);
-        fragmentTransaction.commit();
-    }
-});
-
-
-}
+    private void openNewActivity(String name, Context context) {
+      fragment = new CameraActivity();
+      fragment.setEventListener(this);
+      cordova.getActivity().runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+              FrameLayout containerView = (FrameLayout)cordova.getActivity().findViewById(containerViewId);
+              containerView = new FrameLayout(cordova.getActivity().getApplicationContext());
+              containerView.setId(containerViewId);
+              FrameLayout.LayoutParams containerLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+              
+              // Add container view first (will be behind WebView)
+              cordova.getActivity().addContentView(containerView, containerLayoutParams);
+              
+              // Set WebView parent background to transparent
+              ((ViewGroup)webView.getView().getParent().getParent()).setBackgroundColor(0x00000000);
+              
+              // Store WebView parent reference
+              webViewParent = webView.getView().getParent().getParent();
+              
+              // Bring WebView to front instead of container
+              ((ViewGroup)webView.getView()).bringToFront();
+              
+              // Add camera fragment
+              FragmentManager fragmentManager = cordova.getActivity().getFragmentManager();
+              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+              fragmentTransaction.add(containerView.getId(), fragment);
+              fragmentTransaction.commit();
+          }
+      });
+  }
 
 private boolean takePicture(CallbackContext callbackContext) {
 
